@@ -7,6 +7,12 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
+html {
+  /* Set on <html> so the very first paint is dark — prevents any white/black flash */
+  background-color: #08080b;
+  color-scheme: dark;
+}
+
 html,
 body {
   background-color: #08080b;

@@ -17,8 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ backgroundColor: "#08080b", colorScheme: "dark" }}>
       <head>
+        {/* Preconnect so Google Fonts loads faster and doesn't block render */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font --
             This rule targets the Pages Router, where a <link> outside
             pages/_document.js only loads for a single page. app/layout.tsx
@@ -29,7 +32,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-display">{children}</body>
+      {/* Inline style sets the background on first paint before any CSS bundle loads */}
+      <body className="font-display" style={{ backgroundColor: "#08080b", margin: 0 }}>
+        {children}
+      </body>
     </html>
   );
 }
