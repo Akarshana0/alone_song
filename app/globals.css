@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Rajdhani", "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html {
+  /* Set on <html> so the very first paint is dark — prevents any white/black flash */
+  background-color: #08080b;
+  color-scheme: dark;
+}
+
+html,
+body {
+  background-color: #08080b;
+  color: #e7e7ee;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2c2c36 #0d0d12;
+}
+
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: #0d0d12;
+}
+*::-webkit-scrollbar-thumb {
+  background: #2c2c36;
+  border-radius: 6px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #3ee6e0;
+}
+
+.bg-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Track fader / knob range input styling */
+input[type="range"].fader {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3ee6e0, #a45bff);
+  outline: none;
+}
+input[type="range"].fader::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e7e7ee;
+  border: 2px solid #3ee6e0;
+  box-shadow: 0 0 8px rgba(62, 230, 224, 0.7);
+  cursor: pointer;
+}
+input[type="range"].fader::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e7e7ee;
+  border: 2px solid #3ee6e0;
+  box-shadow: 0 0 8px rgba(62, 230, 224, 0.7);
+  cursor: pointer;
+}
+
+input[type="range"].pan-knob {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff4fd8, #212129, #3ee6e0);
+  outline: none;
+}
+input[type="range"].pan-knob::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e7e7ee;
+  border: 2px solid #ff4fd8;
+  box-shadow: 0 0 8px rgba(255, 79, 216, 0.7);
+  cursor: pointer;
+}
+
+/* FX Rack compact sliders */
+input[type="range"].fx-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  width: 100%;
+  border-radius: 999px;
+  background: #2c2c36;
+  outline: none;
+}
+input[type="range"].fx-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e7e7ee;
+  border: 2px solid #a45bff;
+  box-shadow: 0 0 6px rgba(164, 91, 255, 0.6);
+  cursor: pointer;
+}
+input[type="range"].fx-slider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e7e7ee;
+  border: 2px solid #a45bff;
+  box-shadow: 0 0 6px rgba(164, 91, 255, 0.6);
+  cursor: pointer;
+}
