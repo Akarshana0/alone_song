@@ -906,7 +906,7 @@ export async function renderProjectOffline(
 
   onProgress?.(0.1);
 
-  const rendered = await Tone.Offline(({ transport }) => {
+  const rendered = await Tone.Offline(({ transport }: any) => {
     transport.bpm.value = bpm;
     audible.forEach((t) => {
       const panner = new Tone.Panner(t.pan).toDestination();
@@ -941,135 +941,135 @@ export async function renderProjectOffline(
 }
 
 interface TrackNodes {
-  player: Tone.Player;
-  gate: Tone.Gate;
-  eq: Tone.EQ3;
+  player: ToneImport.Player;
+  gate: ToneImport.Gate;
+  eq: ToneImport.EQ3;
   /** Dynamic EQ: 3-band split, each behind its own Tone.Compressor, summed
    *  back and blended against a dry tap by `wet` (see setDynamicEq). Sits
    *  between the static EQ3 and Filter in the chain. */
-  dynEqIn: Tone.Gain;
-  dynEqDry: Tone.Gain;
-  dynEqLowFilter: Tone.Filter;
-  dynEqLowComp: Tone.Compressor;
-  dynEqMidFilterHP: Tone.Filter;
-  dynEqMidFilterLP: Tone.Filter;
-  dynEqMidComp: Tone.Compressor;
-  dynEqHighFilter: Tone.Filter;
-  dynEqHighComp: Tone.Compressor;
-  dynEqWetSum: Tone.Gain;
-  dynEqOut: Tone.Gain;
-  filter: Tone.Filter;
-  compressor: Tone.Compressor;
-  limiter: Tone.Limiter;
-  distortion: Tone.Distortion;
-  saturation: Tone.Chebyshev;
-  bitcrusher: Tone.BitCrusher;
-  chorus: Tone.Chorus;
-  flangerDelay: Tone.Delay;
-  flangerLFO: Tone.LFO;
-  flangerFeedback: Tone.Gain;
-  flangerWetGain: Tone.Gain;
-  flangerDryGain: Tone.Gain;
-  flangerSum: Tone.Gain;
+  dynEqIn: ToneImport.Gain;
+  dynEqDry: ToneImport.Gain;
+  dynEqLowFilter: ToneImport.Filter;
+  dynEqLowComp: ToneImport.Compressor;
+  dynEqMidFilterHP: ToneImport.Filter;
+  dynEqMidFilterLP: ToneImport.Filter;
+  dynEqMidComp: ToneImport.Compressor;
+  dynEqHighFilter: ToneImport.Filter;
+  dynEqHighComp: ToneImport.Compressor;
+  dynEqWetSum: ToneImport.Gain;
+  dynEqOut: ToneImport.Gain;
+  filter: ToneImport.Filter;
+  compressor: ToneImport.Compressor;
+  limiter: ToneImport.Limiter;
+  distortion: ToneImport.Distortion;
+  saturation: ToneImport.Chebyshev;
+  bitcrusher: ToneImport.BitCrusher;
+  chorus: ToneImport.Chorus;
+  flangerDelay: ToneImport.Delay;
+  flangerLFO: ToneImport.LFO;
+  flangerFeedback: ToneImport.Gain;
+  flangerWetGain: ToneImport.Gain;
+  flangerDryGain: ToneImport.Gain;
+  flangerSum: ToneImport.Gain;
   /** Free-assignable modulation LFO (see ModLfoTarget) — built but left
    *  disconnected until setModLfo() routes it to a target param. */
-  modLfo: Tone.LFO;
-  phaser: Tone.Phaser;
-  tremolo: Tone.Tremolo;
-  vibrato: Tone.Vibrato;
-  pitchShift: Tone.PitchShift;
-  autoTuneAnalyser: Tone.Analyser;
-  autoTuneShift: Tone.PitchShift;
-  deEsserSplitHigh: Tone.Filter;
-  deEsserSplitLow: Tone.Filter;
-  deEsserComp: Tone.Compressor;
-  deEsserSum: Tone.Gain;
-  delay: Tone.FeedbackDelay;
-  reverb: Tone.Reverb;
-  harmVoice1Shift: Tone.PitchShift;
-  harmVoice1Gain: Tone.Gain;
-  harmVoice2Shift: Tone.PitchShift;
-  harmVoice2Gain: Tone.Gain;
-  harmSum: Tone.Gain;
-  vocoderCarrier: Tone.OmniOscillator<Tone.Oscillator | Tone.PulseOscillator>;
-  vocoderDry: Tone.Gain;
-  vocoderWetSum: Tone.Gain;
-  vocoderOut: Tone.Gain;
+  modLfo: ToneImport.LFO;
+  phaser: ToneImport.Phaser;
+  tremolo: ToneImport.Tremolo;
+  vibrato: ToneImport.Vibrato;
+  pitchShift: ToneImport.PitchShift;
+  autoTuneAnalyser: ToneImport.Analyser;
+  autoTuneShift: ToneImport.PitchShift;
+  deEsserSplitHigh: ToneImport.Filter;
+  deEsserSplitLow: ToneImport.Filter;
+  deEsserComp: ToneImport.Compressor;
+  deEsserSum: ToneImport.Gain;
+  delay: ToneImport.FeedbackDelay;
+  reverb: ToneImport.Reverb;
+  harmVoice1Shift: ToneImport.PitchShift;
+  harmVoice1Gain: ToneImport.Gain;
+  harmVoice2Shift: ToneImport.PitchShift;
+  harmVoice2Gain: ToneImport.Gain;
+  harmSum: ToneImport.Gain;
+  vocoderCarrier: ToneImport.OmniOscillator<ToneImport.Oscillator | ToneImport.PulseOscillator>;
+  vocoderDry: ToneImport.Gain;
+  vocoderWetSum: ToneImport.Gain;
+  vocoderOut: ToneImport.Gain;
   vocoderBands: VocoderBandNodes[];
   /** Envelope Shaping (internal, no UI — see EnvelopeShapeSettings). */
-  envShape: Tone.Compressor;
+  envShape: ToneImport.Compressor;
   /** Multiband Compressor nodes (see setMultibandCompressor). */
-  mbcIn: Tone.Gain;
-  mbcDry: Tone.Gain;
-  mbcLowFilter: Tone.Filter;
-  mbcLowComp: Tone.Compressor;
-  mbcLowMakeup: Tone.Gain;
-  mbcMidFilterHP: Tone.Filter;
-  mbcMidFilterLP: Tone.Filter;
-  mbcMidComp: Tone.Compressor;
-  mbcMidMakeup: Tone.Gain;
-  mbcHighFilter: Tone.Filter;
-  mbcHighComp: Tone.Compressor;
-  mbcHighMakeup: Tone.Gain;
-  mbcWetSum: Tone.Gain;
-  mbcOut: Tone.Gain;
+  mbcIn: ToneImport.Gain;
+  mbcDry: ToneImport.Gain;
+  mbcLowFilter: ToneImport.Filter;
+  mbcLowComp: ToneImport.Compressor;
+  mbcLowMakeup: ToneImport.Gain;
+  mbcMidFilterHP: ToneImport.Filter;
+  mbcMidFilterLP: ToneImport.Filter;
+  mbcMidComp: ToneImport.Compressor;
+  mbcMidMakeup: ToneImport.Gain;
+  mbcHighFilter: ToneImport.Filter;
+  mbcHighComp: ToneImport.Compressor;
+  mbcHighMakeup: ToneImport.Gain;
+  mbcWetSum: ToneImport.Gain;
+  mbcOut: ToneImport.Gain;
   /** Transient Shaper nodes (see setTransientShaper). */
-  tsIn: Tone.Gain;
-  tsDry: Tone.Gain;
-  tsAttackDetector: Tone.Compressor;
-  tsAttackTap: Tone.Gain;
-  tsSustainDetector: Tone.Compressor;
-  tsSustainTap: Tone.Gain;
-  tsOut: Tone.Gain;
+  tsIn: ToneImport.Gain;
+  tsDry: ToneImport.Gain;
+  tsAttackDetector: ToneImport.Compressor;
+  tsAttackTap: ToneImport.Gain;
+  tsSustainDetector: ToneImport.Compressor;
+  tsSustainTap: ToneImport.Gain;
+  tsOut: ToneImport.Gain;
   /** Exciter / Enhancer nodes (see setExciter). */
-  exciterHP: Tone.Filter;
-  exciterSaturate: Tone.Chebyshev;
-  exciterWet: Tone.Gain;
-  exciterDry: Tone.Gain;
-  exciterOut: Tone.Gain;
+  exciterHP: ToneImport.Filter;
+  exciterSaturate: ToneImport.Chebyshev;
+  exciterWet: ToneImport.Gain;
+  exciterDry: ToneImport.Gain;
+  exciterOut: ToneImport.Gain;
   /** Formant Shifting nodes (see setFormantShift). */
-  formantShiftNode: Tone.PitchShift;
-  formantFilter: Tone.Filter;
-  formantWet: Tone.Gain;
-  formantDry: Tone.Gain;
-  formantOut: Tone.Gain;
+  formantShiftNode: ToneImport.PitchShift;
+  formantFilter: ToneImport.Filter;
+  formantWet: ToneImport.Gain;
+  formantDry: ToneImport.Gain;
+  formantOut: ToneImport.Gain;
   /** Convolution Reverb nodes (see setConvolutionReverb). */
-  convolver: Tone.Convolver;
-  convolverWet: Tone.Gain;
-  convolverDry: Tone.Gain;
-  convolverOut: Tone.Gain;
+  convolver: ToneImport.Convolver;
+  convolverWet: ToneImport.Gain;
+  convolverDry: ToneImport.Gain;
+  convolverOut: ToneImport.Gain;
   /** Ring Modulation nodes (see setRingMod). */
-  ringModCarrier: Tone.Oscillator;
-  ringModVCA: Tone.Gain;
-  ringModWet: Tone.Gain;
-  ringModDry: Tone.Gain;
-  ringModOut: Tone.Gain;
+  ringModCarrier: ToneImport.Oscillator;
+  ringModVCA: ToneImport.Gain;
+  ringModWet: ToneImport.Gain;
+  ringModDry: ToneImport.Gain;
+  ringModOut: ToneImport.Gain;
   /** Stereo Imager / Widener (see setStereoImager). */
-  stereoWidener: Tone.StereoWidener;
+  stereoWidener: ToneImport.StereoWidener;
   /** Phase Inversion / Polarity Flip: a plain unity/-1 Gain right after the
    *  player (see setPolarity). Sits before every other processing stage so
    *  it flips the raw source, not some already-processed version of it. */
-  polarity: Tone.Gain;
+  polarity: ToneImport.Gain;
   /** Spatial Audio / 3D positioning (see setSpatial). `spatialPanner` is a
    *  real HRTF PannerNode; `spatialDry`/`spatialWet` crossfade between the
    *  plain (pre-existing) stereo pan path and the 3D-positioned path so
    *  enabling/disabling it doesn't require rewiring the graph. */
-  spatialIn: Tone.Gain;
-  spatialDry: Tone.Gain;
-  spatialPanner: Tone.Panner3D;
-  spatialWet: Tone.Gain;
-  spatialOut: Tone.Gain;
+  spatialIn: ToneImport.Gain;
+  spatialDry: ToneImport.Gain;
+  spatialPanner: ToneImport.Panner3D;
+  spatialWet: ToneImport.Gain;
+  spatialOut: ToneImport.Gain;
   /** WAM plugin-chain insertion point, spliced in right before the panner.
    *  Plain native GainNodes (not Tone-wrapped) since hosted WAM plugins
    *  expose raw Web Audio `AudioNode`s — see `loadPlugin`/`rebuildPluginChain`. */
   pluginsIn: GainNode;
   pluginsOut: GainNode;
-  panner: Tone.Panner;
+  panner: ToneImport.Panner;
   /** Sidechain-ducking VCA, spliced between panner and gain. Sits at unity
    *  (1) when no sidechain is active; see AudioEngine.setSidechain. */
-  duckGain: Tone.Gain;
-  gain: Tone.Gain;
-  meter: Tone.Meter;
+  duckGain: ToneImport.Gain;
+  gain: ToneImport.Gain;
+  meter: ToneImport.Meter;
   url: string;
 }
 
@@ -1087,18 +1087,18 @@ interface LoadedPlugin {
  *  triggers grains from `sampleBuffer` at a playbackRate derived from the
  *  requested pitch vs. the sample's declared base note. */
 interface GranularVoice {
-  player: Tone.GrainPlayer;
-  gain: Tone.Gain;
+  player: ToneImport.GrainPlayer;
+  gain: ToneImport.Gain;
   busy: boolean;
   stopHandle: ReturnType<typeof setTimeout> | null;
 }
 
 interface MidiTrackNodes {
-  synth: Tone.PolySynth;
-  panner: Tone.Panner;
-  gain: Tone.Gain;
-  meter: Tone.Meter;
-  part: Tone.Part | null;
+  synth: ToneImport.PolySynth;
+  panner: ToneImport.Panner;
+  gain: ToneImport.Gain;
+  meter: ToneImport.Meter;
+  part: ToneImport.Part | null;
   /** Which engine is currently live for this track (subtractive/wavetable
    *  share `synth`; granular uses `granularVoices` instead). */
   engine: InstrumentEngine;
@@ -1107,11 +1107,11 @@ interface MidiTrackNodes {
 }
 
 interface VocoderBandNodes {
-  modFilter: Tone.Filter;
-  rectifier: Tone.WaveShaper;
-  envelope: Tone.Filter;
-  carrierFilter: Tone.Filter;
-  vca: Tone.Gain;
+  modFilter: ToneImport.Filter;
+  rectifier: ToneImport.WaveShaper;
+  envelope: ToneImport.Filter;
+  carrierFilter: ToneImport.Filter;
+  vca: ToneImport.Gain;
 }
 
 /** A bus is a lightweight submix group: N tracks route their post-fader
@@ -1119,9 +1119,9 @@ interface VocoderBandNodes {
  *  Kept simpler than the per-track chain (no full FX rack) — grouping +
  *  shared trim/pan is the 80% use case ("Drums" bus, "Vocals" bus, etc). */
 interface BusNodes {
-  gain: Tone.Gain;
-  panner: Tone.Panner;
-  meter: Tone.Meter;
+  gain: ToneImport.Gain;
+  panner: ToneImport.Panner;
+  meter: ToneImport.Meter;
 }
 
 const VOCODER_BAND_COUNT = 8;
@@ -1173,22 +1173,22 @@ function vocoderBandFrequencies(): number[] {
 
 class AudioEngine {
   private trackNodes: Map<string, TrackNodes> = new Map();
-  private metronome: Tone.Synth | null = null;
-  private metronomeLoop: Tone.Loop | null = null;
+  private metronome: ToneImport.Synth | null = null;
+  private metronomeLoop: ToneImport.Loop | null = null;
 
-  private masterGain!: Tone.Gain;
-  private masterCompressor!: Tone.Compressor;
-  private masterLimiter!: Tone.Limiter;
-  private masterMeter!: Tone.Meter;
-  private masterAnalyser!: Tone.Analyser;
+  private masterGain!: ToneImport.Gain;
+  private masterCompressor!: ToneImport.Compressor;
+  private masterLimiter!: ToneImport.Limiter;
+  private masterMeter!: ToneImport.Meter;
+  private masterAnalyser!: ToneImport.Analyser;
 
   // --- Metering suite taps (Phase Correlation / Goniometer / True Peak / Tuner) ---
   // All passive parallel taps off the post-limiter bus, same pattern as masterAnalyser:
   // Split -> a waveform Analyser per channel, so the UI can read real L/R sample
   // buffers every frame without adding anything to the actual signal path.
-  private masterSplit!: Tone.Split;
-  private masterWaveformL!: Tone.Analyser;
-  private masterWaveformR!: Tone.Analyser;
+  private masterSplit!: ToneImport.Split;
+  private masterWaveformL!: ToneImport.Analyser;
+  private masterWaveformR!: ToneImport.Analyser;
 
   private started = false;
   private soloedTrackIds: Set<string> = new Set();
@@ -1230,7 +1230,7 @@ class AudioEngine {
   // --- Workflow: Sidechaining — fake-keyed ducking via envelope follower,
   // since Web Audio's compressor has no external key input. ---
   private sidechainSettings: Map<string, { enabled: boolean; sourceTrackId: string | null; amount: number }> = new Map();
-  private sidechainNodes: Map<string, { follower: Tone.Follower; scale: Tone.Scale; sourceTrackId: string }> = new Map();
+  private sidechainNodes: Map<string, { follower: ToneImport.Follower; scale: ToneImport.Scale; sourceTrackId: string }> = new Map();
 
   // --- Free-assignable Mod LFO: which param each track's modLfo node is
   // currently wired into (or "off"), so setModLfo can tell when it needs
@@ -1241,8 +1241,8 @@ class AudioEngine {
   // mic stream + Tone.Recorder, reused by whichever feature needs to capture. ---
   private micStream: MediaStream | null = null;
   private micSourceNode: MediaStreamAudioSourceNode | null = null;
-  private micRecorder: Tone.Recorder | null = null;
-  private monitorGain!: Tone.Gain;
+  private micRecorder: ToneImport.Recorder | null = null;
+  private monitorGain!: ToneImport.Gain;
 
   constructor() {
     // Next.js prerenders pages (including "use client" ones) once on the
@@ -1479,7 +1479,7 @@ class AudioEngine {
     const vocoderOut = new Tone.Gain(1);
     const vocoderBands: VocoderBandNodes[] = vocoderBandFrequencies().map((freq) => {
       const modFilter = new Tone.Filter({ type: "bandpass", frequency: freq, Q: 4 });
-      const rectifier = new Tone.WaveShaper((x) => Math.abs(x), 1024);
+      const rectifier = new Tone.WaveShaper((x: any) => Math.abs(x), 1024);
       const envelope = new Tone.Filter({ type: "lowpass", frequency: 20, Q: 0.5 });
       const carrierFilter = new Tone.Filter({ type: "bandpass", frequency: freq, Q: 4 });
       const vca = new Tone.Gain(0);
@@ -2039,7 +2039,7 @@ class AudioEngine {
     const n = this.midiNodes.get(trackId);
     if (!n) return;
     n.part?.dispose();
-    const part = new Tone.Part((time, ev: MidiNote) => {
+    const part = new Tone.Part((time: any, ev: MidiNote) => {
       if (n.engine === "granular" && granularSettings) {
         this.triggerGranularNote(trackId, ev.pitch, ev.velocity, ev.duration, time, granularSettings);
         return;
@@ -2225,7 +2225,7 @@ class AudioEngine {
         sorted
           .filter((p) => p.time > startPos)
           .forEach((p) => {
-            const id = Tone.Transport.schedule((time) => {
+            const id = Tone.Transport.schedule((time: any) => {
               param.linearRampToValueAtTime(p.value, time);
             }, p.time);
             ids.push(id);
@@ -3079,9 +3079,10 @@ class AudioEngine {
     const ok = await this.openMic();
     if (!ok || !this.micSourceNode) return false;
     this.micRecorder?.dispose();
-    this.micRecorder = new Tone.Recorder();
-    this.micSourceNode.connect(this.micRecorder.input as unknown as AudioNode);
-    this.micRecorder.start();
+    const recorder = new Tone.Recorder();
+    this.micRecorder = recorder;
+    this.micSourceNode.connect(recorder.input as unknown as AudioNode);
+    recorder.start();
     return true;
   }
 
@@ -3134,7 +3135,7 @@ class AudioEngine {
         }).toDestination();
       }
       if (!this.metronomeLoop) {
-        this.metronomeLoop = new Tone.Loop((time) => {
+        this.metronomeLoop = new Tone.Loop((time: any) => {
           this.metronome?.triggerAttackRelease("C6", "32n", time);
         }, "4n").start(0);
       }

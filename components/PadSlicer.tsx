@@ -25,7 +25,7 @@ export default function PadSlicer({ track }: { track: TrackType }) {
   const [buffer, setBuffer] = useState<AudioBuffer | null>(null);
   const [activePad, setActivePad] = useState<number | null>(null);
   const sendSliceToNewTrack = useDAWStore((s) => s.sendSliceToNewTrack);
-  const previewPlayerRef = useRef<Tone.Player | null>(null);
+  const previewPlayerRef = useRef<ToneImport.Player | null>(null);
 
   useEffect(() => {
     if (!track.fileUrl) return;
