@@ -5,6 +5,7 @@ const ToneLib: any = typeof window !== "undefined" ? require("tone") : {};
 const Tone: any = ToneLib.default || ToneLib;
 const Player = Tone.Player;
 const toneStart = Tone.start;
+import type * as ToneImport from "tone";
 import { Grid2x2, Play, ArrowUpRight } from "lucide-react";
 import { Track as TrackType, useDAWStore } from "@/store/useDAWStore";
 import { urlToAudioBuffer } from "@/lib/audioEngine";
