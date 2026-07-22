@@ -1,10 +1,8 @@
 "use client";
 
-import { getContext } from "tone";
-
-const Tone: Record<string, any> = {
-  getContext,
-};
+const ToneLib: any = typeof window !== "undefined" ? require("tone") : {};
+const Tone: any = ToneLib.default || ToneLib;
+const getContext = Tone.getContext;
 import { wsolaTimeStretch } from "./audioEngine";
 import { sliceBuffer } from "./audioEditing";
 

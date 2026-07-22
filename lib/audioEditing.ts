@@ -1,10 +1,8 @@
 "use client";
 
-import { getContext } from "tone";
-
-const Tone: Record<string, any> = {
-  getContext,
-};
+const ToneLib: any = typeof window !== "undefined" ? require("tone") : {};
+const Tone: any = ToneLib.default || ToneLib;
+const getContext = Tone.getContext;
 
 /**
  * Pure, side-effect-free AudioBuffer editing primitives used by the DAW

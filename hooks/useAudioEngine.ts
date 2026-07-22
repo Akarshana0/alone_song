@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Transport } from "tone";
+const ToneLib: any = typeof window !== "undefined" ? require("tone") : {};
+const Tone: any = ToneLib.default || ToneLib;
+const Transport = Tone.Transport;
 import { audioEngine } from "@/lib/audioEngine";
 import { useDAWStore } from "@/store/useDAWStore";
 

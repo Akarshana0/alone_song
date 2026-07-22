@@ -1,13 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Player, start as toneStart } from "tone";
-import type * as ToneImport from "tone";
-
-const Tone: Record<string, any> = {
-  Player,
-  start: toneStart,
-};
+const ToneLib: any = typeof window !== "undefined" ? require("tone") : {};
+const Tone: any = ToneLib.default || ToneLib;
+const Player = Tone.Player;
+const toneStart = Tone.start;
 import { Grid2x2, Play, ArrowUpRight } from "lucide-react";
 import { Track as TrackType, useDAWStore } from "@/store/useDAWStore";
 import { urlToAudioBuffer } from "@/lib/audioEngine";

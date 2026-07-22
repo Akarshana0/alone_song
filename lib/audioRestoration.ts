@@ -1,10 +1,8 @@
 "use client";
 
-import { getContext } from "tone";
-
-const Tone: Record<string, any> = {
-  getContext,
-};
+const ToneLib: any = typeof window !== "undefined" ? require("tone") : {};
+const Tone: any = ToneLib.default || ToneLib;
+const getContext = Tone.getContext;
 
 /**
  * Offline "Restoration" suite: Noise Reduction, De-click, De-clip, De-reverb.

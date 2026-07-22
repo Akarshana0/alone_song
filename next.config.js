@@ -15,6 +15,10 @@ const nextConfig = {
   },
   webpack: (config, { isServer }) => {
     config.resolve.fallback = { ...config.resolve.fallback, fs: false };
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      tone: "tone/build/Tone.js",
+    };
     if (!isServer) {
       config.optimization.concatenateModules = false;
       config.module.rules.push({

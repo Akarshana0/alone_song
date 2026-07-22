@@ -2,34 +2,14 @@
 
 // Named imports from tone — bypasses ESM/CJS namespace interop issues
 // that cause "Tone.Meter is not a constructor" in production builds.
-import {
-  Meter, Gain, Panner, Compressor, Limiter, Filter, Distortion,
-  BitCrusher, Chorus, Phaser, Tremolo, Vibrato, PitchShift,
-  FeedbackDelay, Reverb, EQ3, Gate, Chebyshev, Player, PolySynth,
-  Synth, Analyser, Split, Recorder, Panner3D, LFO, AutoFilter,
-  Follower, Scale, Delay, OmniOscillator, Oscillator, PulseOscillator,
-  Transport, Destination, start as toneStart, getContext, now as toneNow,
-  ToneAudioBuffer, Offline, Draw,
-  context as toneCtxAccessor,
-} from "tone";
+const ToneLib: any = typeof window !== "undefined" ? require("tone") : {};
+const Tone: any = ToneLib.default || ToneLib;
 import type * as ToneImport from "tone";
 
-// Build a Tone-like namespace object from the named imports so every
-// existing `Tone.XYZ` / `new Tone.XYZ(...)` reference keeps working
-// without touching 200+ call sites.
-const Tone: Record<string, any> = {
-  Meter, Gain, Panner, Compressor, Limiter, Filter, Distortion,
-  BitCrusher, Chorus, Phaser, Tremolo, Vibrato, PitchShift,
-  FeedbackDelay, Reverb, EQ3, Gate, Chebyshev, Player, PolySynth,
-  Synth, Analyser, Split, Recorder, Panner3D, LFO, AutoFilter,
-  Follower, Scale, Delay, OmniOscillator, Oscillator, PulseOscillator,
-  Transport, Destination, ToneAudioBuffer, Draw,
-  start: toneStart,
-  getContext,
-  now: toneNow,
-  Offline,
-  context: toneCtxAccessor,
-};
+const toneStart = Tone.start;
+const getContext = Tone.getContext;
+const toneNow = Tone.now;
+const toneCtxAccessor = Tone.context;
 
 /**
  * AudioEngine centralizes all Web Audio / Tone.js routing for ALONE SONG.
