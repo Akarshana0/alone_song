@@ -26,6 +26,13 @@ const nextConfig = {
         sideEffects: true,
       });
     }
+    
+    // Force Webpack to treat Tone.js as CommonJS/UMD instead of strict ESM
+    config.module.rules.push({
+      test: /tone[\\/]build[\\/]Tone\.js$/,
+      type: 'javascript/auto'
+    });
+    
     return config;
   },
 };
