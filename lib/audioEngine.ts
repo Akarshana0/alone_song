@@ -1,17 +1,35 @@
 "use client";
 
-import * as ToneImport from "tone";
-// `tone` may expose its API as named exports or a default namespace depending
-// on bundler/packaging; prefer a safe interop so `Tone.*` references below
-// work in either case.
-// Robust interop: some bundler/build combos put the real Tone
-// namespace on `.default`, others expose it directly on the module.
-// Picking whichever side actually has a real class (Meter) avoids a
-// "Tone.Meter is not a constructor" crash in production builds.
-const Tone: any =
-  typeof (ToneImport as any).Meter === "function"
-    ? ToneImport
-    : (ToneImport as any).default ?? ToneImport;
+// Named imports from tone — bypasses ESM/CJS namespace interop issues
+// that cause "Tone.Meter is not a constructor" in production builds.
+import {
+  Meter, Gain, Panner, Compressor, Limiter, Filter, Distortion,
+  BitCrusher, Chorus, Phaser, Tremolo, Vibrato, PitchShift,
+  FeedbackDelay, Reverb, EQ3, Gate, Chebyshev, Player, PolySynth,
+  Synth, Analyser, Split, Recorder, Panner3D, LFO, AutoFilter,
+  Follower, Scale, Delay, OmniOscillator, Oscillator, PulseOscillator,
+  Transport, Destination, start as toneStart, getContext, now as toneNow,
+  ToneAudioBuffer, Offline, Draw,
+  context as toneCtxAccessor,
+} from "tone";
+import type * as ToneImport from "tone";
+
+// Build a Tone-like namespace object from the named imports so every
+// existing `Tone.XYZ` / `new Tone.XYZ(...)` reference keeps working
+// without touching 200+ call sites.
+const Tone: Record<string, any> = {
+  Meter, Gain, Panner, Compressor, Limiter, Filter, Distortion,
+  BitCrusher, Chorus, Phaser, Tremolo, Vibrato, PitchShift,
+  FeedbackDelay, Reverb, EQ3, Gate, Chebyshev, Player, PolySynth,
+  Synth, Analyser, Split, Recorder, Panner3D, LFO, AutoFilter,
+  Follower, Scale, Delay, OmniOscillator, Oscillator, PulseOscillator,
+  Transport, Destination, ToneAudioBuffer, Draw,
+  start: toneStart,
+  getContext,
+  now: toneNow,
+  Offline,
+  context: toneCtxAccessor,
+};
 
 /**
  * AudioEngine centralizes all Web Audio / Tone.js routing for ALONE SONG.

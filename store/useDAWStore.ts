@@ -378,6 +378,7 @@ interface DAWState {
   cloudPanelOpen: boolean;
   cloudBusy: boolean;
   cloudError: string | null;
+  hydrateFromStorage: () => void;
   toggleCloudPanel: (open?: boolean) => void;
   buildProjectSnapshot: (includeAudio: boolean) => Promise<ProjectSnapshot>;
   loadProjectSnapshot: (snapshot: ProjectSnapshot) => Promise<void>;
@@ -613,15 +614,21 @@ export const useDAWStore = create<DAWState>((set, get) => ({
   history: [],
   historyIndex: -1,
 
-  trackTemplates: loadLocal<TrackTemplate[]>(LOCAL_KEYS.templates, []),
+  trackTemplates: [],
   templatesPanelOpen: false,
-  macros: loadLocal<Macro[]>(LOCAL_KEYS.macros, []),
+  macros: [],
   macrosPanelOpen: false,
   runningMacroId: null,
-  cloudVersions: loadLocal<CloudVersion[]>(LOCAL_KEYS.cloud, []),
+  cloudVersions: [],
   cloudPanelOpen: false,
   cloudBusy: false,
   cloudError: null,
+
+  hydrateFromStorage: () => set(() => ({
+    trackTemplates: loadLocal<TrackTemplate[]>(LOCAL_KEYS.templates, []),
+    macros: loadLocal<Macro[]>(LOCAL_KEYS.macros, []),
+    cloudVersions: loadLocal<CloudVersion[]>(LOCAL_KEYS.cloud, []),
+  })),
 
   exportPanelOpen: false,
   toggleExportPanel: (open) => set((state) => ({ exportPanelOpen: open ?? !state.exportPanelOpen })),

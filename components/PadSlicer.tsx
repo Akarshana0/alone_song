@@ -1,8 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import * as ToneImport from "tone";
-const Tone: any = (ToneImport as any).default ?? ToneImport;
+import { Player, start as toneStart } from "tone";
+import type * as ToneImport from "tone";
+
+const Tone: Record<string, any> = {
+  Player,
+  start: toneStart,
+};
 import { Grid2x2, Play, ArrowUpRight } from "lucide-react";
 import { Track as TrackType, useDAWStore } from "@/store/useDAWStore";
 import { urlToAudioBuffer } from "@/lib/audioEngine";

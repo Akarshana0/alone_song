@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Navbar from "@/components/Navbar";
 import Transport from "@/components/Transport";
 import EditToolbar from "@/components/EditToolbar";
@@ -15,10 +16,18 @@ import CloudSyncPanel from "@/components/CloudSyncPanel";
 import { useAudioEngine } from "@/hooks/useAudioEngine";
 import { useDAWStore } from "@/store/useDAWStore";
 
-export default function DAWPage() {
+function DAWContent() {
   useAudioEngine();
   const tracks = useDAWStore((s) => s.tracks);
   const addTrack = useDAWStore((s) => s.addTrack);
+  const hydrateFromStorage = useDAWStore((s) => s.hydrateFromStorage);
+
+  // Hydrate persisted data (templates, macros, cloud versions) from
+  // localStorage on the client after initial mount — avoids SSR/client
+  // hydration mismatch (React Error #423).
+  useEffect(() => {
+    hydrateFromStorage();
+  }, [hydrateFromStorage]);
 
   // Seed with one empty audio track on first load so the UI never looks bare.
   useEffect(() => {
@@ -42,5 +51,13 @@ export default function DAWPage() {
       <MacrosPanel />
       <CloudSyncPanel />
     </main>
+  );
+}
+
+export default function DAWPage() {
+  return (
+    <ErrorBoundary>
+      <DAWContent />
+    </ErrorBoundary>
   );
 }

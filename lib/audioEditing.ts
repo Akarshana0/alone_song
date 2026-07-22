@@ -1,14 +1,10 @@
 "use client";
 
-import * as ToneImport from "tone";
-// Robust interop: some bundler/build combos put the real Tone
-// namespace on `.default`, others expose it directly on the module.
-// Picking whichever side actually has a real class (Meter) avoids a
-// "Tone.Meter is not a constructor" crash in production builds.
-const Tone: any =
-  typeof (ToneImport as any).Meter === "function"
-    ? ToneImport
-    : (ToneImport as any).default ?? ToneImport;
+import { getContext } from "tone";
+
+const Tone: Record<string, any> = {
+  getContext,
+};
 
 /**
  * Pure, side-effect-free AudioBuffer editing primitives used by the DAW
